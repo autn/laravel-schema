@@ -24,9 +24,6 @@
         "phpunit/phpunit": "~4.0"
     },
     "autoload": {
-        "classmap": [
-            "database"
-        ],
         "psr-4": {
             "Autn\\Schema\\":"packages/Schema/src/"
         }
