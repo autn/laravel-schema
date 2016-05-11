@@ -28,6 +28,8 @@ protected $commands = [
 ```
 ## 3. Usage
 
+**Notice:** The command will refresh your database, the seeding and real data will removed. I recommend use `--dbconnect` to run with other database.
+
 In root Laravel project, type:
 
 ```sh
@@ -44,7 +46,7 @@ Example:
 php artisan db:schema --path=public
 ```
 
-The default database connect is `mysql`. You can change the connect by add `--dbconnect` to the command.
+The default database connect is `mysql` in `config/database.php`. You can change the connect by add `--dbconnect` to the command.
 
 Example:
 
@@ -52,7 +54,7 @@ Example:
 php artisan db:schema --path=public --dbconnect=mysql2
 ```
 
-**Notice:** If you add `--dbconnect` option, you must remove or rename `.env` file, and you must add config to `config/database.php`.
+**Notice:** If you add `--dbconnect` option, you must add config to `config/database.php`.
 
 Example:
 
@@ -74,11 +76,11 @@ Example:
 
 'mysql2' => [
     'driver' => 'mysql',
-    'host' => env('DB_HOST', 'localhost'),
-    'port' => env('DB_PORT', '3306'),
-    'database' => env('DB_DATABASE', 'db2'),
-    'username' => env('DB_USERNAME', 'root'),
-    'password' => env('DB_PASSWORD', 'root'),
+    'host' => 'localhost',
+    'port' => '3306',
+    'database' => 'db2',
+    'username' => 'root',
+    'password' => 'root',
     'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix' => '',
