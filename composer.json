@@ -28,7 +28,7 @@
             "database"
         ],
         "psr-4": {
-            "Autn\\Schema\\":"packages/Schema/src/",
+            "Autn\\Schema\\":"packages/Schema/src/"
         }
     },
     "autoload-dev": {
