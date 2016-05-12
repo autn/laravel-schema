@@ -1,0 +1,29 @@
+language: php
+
+php:
+- 5.5.9
+
+services:
+  - mysql
+
+before_script:
+  - composer self-update
+  - mysql -e 'create database schema_test;'
+  - cp -R ./vendor/laravel/laravel/* .
+  - cp -R ./packages/readme.md .
+  - cp -R ./packages/composer-laravel.json ./composer.json
+  - cp -R ./packages/phpunit.xml .
+  - cp -R ./packages/Schema/src/Console/Kernel.php ./app/Console/
+  - cp -R ./packages/database.php ./config/database.php
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+
+script:
+  - vendor/bin/phpunit --configuration phpunit.xml
+  - php packages/Schema/tests/build/scripts/junit.php
+  - . tests/build/bin/phpcs
+  - . tests/build/bin/phpmd
+
+notifications:
+  on_success: always
+  on_failure: always
