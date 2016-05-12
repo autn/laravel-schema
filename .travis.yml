@@ -7,7 +7,7 @@ services:
   - mysql
 
 before_script:
-  - composer self-update
+  - composer update
   - mysql -e 'create database schema_test;'
   - cp -R ./vendor/laravel/laravel/* .
   - cp -R ./packages/readme.md .
