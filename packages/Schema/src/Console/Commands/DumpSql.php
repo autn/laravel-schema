@@ -16,7 +16,7 @@ class DumpSql extends Command
      *
      * @var string
      */
-    protected $signature = 'db:schema {--path= : Path to save file} {--dbconnect= : Name of database}';
+    protected $signature = 'db:schema {--path= : Path to save file} {--dbconnect= : Name of database} {--force= : Force }';
 
     /**
      * The console command description.
@@ -52,6 +52,7 @@ class DumpSql extends Command
 
         $pathparam = $this->option('path');
         $dbconnect = $this->option('dbconnect');
+        $force = $this->option('force');
 
         if (!$dbconnect) {
             $dbconnect = 'mysql';
@@ -83,7 +84,7 @@ class DumpSql extends Command
             return;
         }
 
-        if ($this->confirm('Your database will refresh! Do you wish to continue? [yes|no]'))
+        if ($force || $this->confirm('Your database will refresh! Do you wish to continue? [yes|no]'))
         {
             Artisan::call('vendor:publish');
             Artisan::call('clear-compiled');

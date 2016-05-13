@@ -9,6 +9,7 @@ services:
 before_script:
   - composer update
   - mysql -e 'create database schema_test;'
+  - mysql -e 'create database schema_test_2;'
   - cp -R ./vendor/laravel/laravel/* .
   - cp -R ./packages/readme.md .
   - cp -R ./packages/composer-laravel.json ./composer.json

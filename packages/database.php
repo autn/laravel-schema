@@ -69,7 +69,7 @@ return [
             'driver' => 'mysql',
             'host' => 'localhost',
             'port' => '3306',
-            'database' => 'schema_test',
+            'database' => 'schema_test_2',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
