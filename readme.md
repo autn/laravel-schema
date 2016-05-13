@@ -17,6 +17,8 @@ Install via composer - edit your `composer.json` to require the package.
 }
 ```
 
+// Add to test push Travis
+
 Then run `composer update` in your terminal to pull it in.
 Once this has finished, you will need to add the command to the `commands` array in your `app/Console/Kernel.php` config as follows:
 
