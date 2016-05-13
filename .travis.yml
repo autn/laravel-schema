@@ -17,7 +17,6 @@ before_script:
   - cp -R ./packages/database.php ./config/database.php
   - composer update
   - composer install --prefer-source --no-interaction --dev
-  - php artisan key:generate
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml
