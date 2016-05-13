@@ -1,5 +1,7 @@
 # Laravel Database Schema
 
+[![Build Status](https://travis-ci.org/autn/laravel-schema.svg)](https://travis-ci.org/autn/laravel-schema)
+
 ## 1. About
 
 This package generate Mysql database schema from migrations files.
