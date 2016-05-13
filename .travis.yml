@@ -21,9 +21,9 @@ before_script:
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml
-  - php packages/Schema/tests/build/scripts/junit.php
-  - . packages/Schema/tests/build/bin/phpcs
-  - . packages/Schema/tests/build/bin/phpmd
+  - php tests/build/scripts/junit.php
+  - . tests/build/bin/phpcs
+  - . tests/build/bin/phpmd
 
 notifications:
   on_success: always

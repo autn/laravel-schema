@@ -1,6 +1,6 @@
 <?php
 
-class SchemaTest extends TestCase
+class SchemaTest extends SchemaTestCase
 {
     public function testDemo()
     {

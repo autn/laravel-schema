@@ -2,7 +2,7 @@
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class TestCase extends Illuminate\Foundation\Testing\TestCase
+class SchemaTestCase extends Illuminate\Foundation\Testing\TestCase
 {
     use DatabaseMigrations;
     /**
@@ -19,7 +19,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../../../bootstrap/app.php';
+        $app = require __DIR__.'../bootstrap/app.php';
 
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
@@ -29,8 +29,6 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     public function setUp()
     {
         parent::setUp();
-        Artisan::call('vendor:publish', ['--tag'=>['migrations']]);
-        Artisan::call('migrate:refresh');
         $this->seed();
     }
 }
