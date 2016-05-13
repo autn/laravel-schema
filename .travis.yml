@@ -15,9 +15,9 @@ before_script:
   - cp -R ./packages/phpunit.xml .
   - cp -R ./packages/Schema/src/Console/Kernel.php ./app/Console/
   - cp -R ./packages/database.php ./config/database.php
-  - php artisan key:generate
   - composer update
   - composer install --prefer-source --no-interaction --dev
+  - php artisan key:generate
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml
