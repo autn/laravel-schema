@@ -15,14 +15,15 @@ before_script:
   - cp -R ./packages/phpunit.xml .
   - cp -R ./packages/Schema/src/Console/Kernel.php ./app/Console/
   - cp -R ./packages/database.php ./config/database.php
+  - php artisan key:generate
   - composer update
   - composer install --prefer-source --no-interaction --dev
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml
   - php packages/Schema/tests/build/scripts/junit.php
-  - . tests/build/bin/phpcs
-  - . tests/build/bin/phpmd
+  - . packages/Schema/tests/build/bin/phpcs
+  - . packages/Schema/tests/build/bin/phpmd
 
 notifications:
   on_success: always
