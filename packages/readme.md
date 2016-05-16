@@ -1,5 +1,10 @@
 # Laravel Database Schema
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/autn/laravel-schema.svg?style=flat-square)](https://packagist.org/packages/autn/laravel-schema)
+<!--[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)-->
+[![Build Status](https://api.travis-ci.org/autn/laravel-schema.svg?branch=master)](https://travis-ci.org/autn/laravel-schema)
+[![Total Downloads](https://img.shields.io/packagist/dt/autn/laravel-schema.svg?style=flat-square)](https://packagist.org/packages/autn/laravel-schema)
+
 ## 1. About
 
 This package generate Mysql database schema from migrations files.
@@ -88,4 +93,13 @@ Example:
     'engine' => null,
 ],
 // ...
+```
+
+This is full options:
+```
+--path: Path to save schema file
+
+--dbconnect: Database connect to run
+
+--force: Run without confirmation
 ```
