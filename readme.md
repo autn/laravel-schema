@@ -1,7 +1,7 @@
 # Laravel Database Schema
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/autn/laravel-schema.svg?style=flat-square)](https://packagist.org/packages/autn/laravel-schema)
-[![Build Status](https://api.travis-ci.org/autn/laravel-schema.svg?branch=master)](https://travis-ci.org/autn/laravel-schema)
+[![Build Status](https://api.travis-ci.org/autn/laravel-schema.svg?branch=master&style=flat-square)](https://travis-ci.org/autn/laravel-schema)
 [![Total Downloads](https://img.shields.io/packagist/dt/autn/laravel-schema.svg?style=flat-square)](https://packagist.org/packages/autn/laravel-schema)
 
 ## 1. About
