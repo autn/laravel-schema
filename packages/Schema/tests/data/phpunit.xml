@@ -13,8 +13,7 @@
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory>./tests/</directory>
-            <!-- <directory>./packages/Users/tests/</directory>
-            <directory>./packages/Settings/tests/</directory> -->
+            <directory>./packages/Schema/tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
