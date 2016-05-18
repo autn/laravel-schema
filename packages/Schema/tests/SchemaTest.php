@@ -53,8 +53,8 @@ class SchemaTest extends SchemaTestCase
     public function testNoPath()
     {
         $info = Artisan::call('db:schema', ['--force' => true, '--path' => 'databasexyz']);
-dump($info);
-        $this->assertEquals('The path does not exist', $info);
+
+        $this->assertFalse(file_exists(base_path() . '/databasexyz/schema.sql'));
     }
 
     public function testWithDbconnectOption()
