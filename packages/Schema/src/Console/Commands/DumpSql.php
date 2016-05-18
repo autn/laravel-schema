@@ -42,14 +42,6 @@ class DumpSql extends Command
      */
     public function handle()
     {
-        $default = Config::get('database.default');
-
-        if ($default !== 'mysql') {
-            $this->info('Only support MySQL');
-
-            return;
-        }
-
         $pathparam = $this->option('path');
         $dbconnect = $this->option('dbconnect');
         $force = $this->option('force');
@@ -79,9 +71,9 @@ class DumpSql extends Command
         try {
             $dbh = new PDO("mysql:host=$host;dbname=$database", $username, $password);
         } catch (Exception $e) {
-            $this->info($e->getMessage());
+            $this->info($e->getMessage()); //@codeCoverageIgnore
 
-            return;
+            return; //@codeCoverageIgnore
         }
 
         if ($force || $this->confirm('Your database will refresh! Do you wish to continue? [yes|no]'))
@@ -96,7 +88,7 @@ class DumpSql extends Command
 
                 $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
             } catch (Exception $e) {
-                $this->info($e->getMessage());
+                $this->info($e->getMessage()); //@codeCoverageIgnore
             }
         }
     }

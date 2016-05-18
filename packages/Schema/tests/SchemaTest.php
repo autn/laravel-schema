@@ -50,6 +50,13 @@ class SchemaTest extends SchemaTestCase
         unlink(base_path() . '/database/factories/schema.sql');
     }
 
+    public function testNoPath()
+    {
+        $info = Artisan::call('db:schema', ['--force' => true, '--path' => 'databasexyz']);
+
+        $this->assertFalse(file_exists(base_path() . '/databasexyz/schema.sql'));
+    }
+
     public function testWithDbconnectOption()
     {
         $dbFile = fopen(base_path() . '/packages/Schema/tests/schema.sql', 'r');
