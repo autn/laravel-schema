@@ -11,10 +11,10 @@ before_script:
   - mysql -e 'create database schema_test;'
   - mysql -e 'create database schema_test_2;'
   - cp -R ./vendor/laravel/laravel/* .
-  - cp -R ./Config/composer-laravel.json ./composer.json
-  - cp -R ./Config/phpunit.xml .
+  - cp -R ./data/composer-laravel.json ./composer.json
+  - cp -R ./data/phpunit.xml .
   - cp -R ./src/Schema/Console/Kernel.php ./app/Console/
-  - cp -R ./Config/database.php ./config/database.php
+  - cp -R ./data/database.php ./config/database.php
   - composer update
   - composer install --prefer-source --no-interaction --dev
 
