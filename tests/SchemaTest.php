@@ -4,8 +4,8 @@ class SchemaTest extends SchemaTestCase
 {
     public function testNoOptions()
     {
-        $dbFile = fopen(base_path() . '/packages/Schema/tests/schema.sql', 'r');
-        $fileSize = filesize(base_path() . '/packages/Schema/tests/schema.sql');
+        $dbFile = fopen(base_path() . '/data/schema.sql', 'r');
+        $fileSize = filesize(base_path() . '/data/schema.sql');
 
         Artisan::call('db:schema', ['--force' => true]);
 
@@ -28,8 +28,8 @@ class SchemaTest extends SchemaTestCase
 
     public function testWithPathOption()
     {
-        $dbFile = fopen(base_path() . '/packages/Schema/tests/schema.sql', 'r');
-        $fileSize = filesize(base_path() . '/packages/Schema/tests/schema.sql');
+        $dbFile = fopen(base_path() . '/data/schema.sql', 'r');
+        $fileSize = filesize(base_path() . '/data/schema.sql');
 
         Artisan::call('db:schema', ['--force' => true, '--path' => 'database/factories']);
 
@@ -59,8 +59,8 @@ class SchemaTest extends SchemaTestCase
 
     public function testWithDbconnectOption()
     {
-        $dbFile = fopen(base_path() . '/packages/Schema/tests/schema.sql', 'r');
-        $fileSize = filesize(base_path() . '/packages/Schema/tests/schema.sql');
+        $dbFile = fopen(base_path() . '/data/schema.sql', 'r');
+        $fileSize = filesize(base_path() . '/data/schema.sql');
 
         Artisan::call('db:schema', ['--force' => true, '--dbconnect' => 'mysql2']);
 
@@ -83,8 +83,8 @@ class SchemaTest extends SchemaTestCase
 
     public function testWithPathAndDbconnectOptions()
     {
-        $dbFile = fopen(base_path() . '/packages/Schema/tests/schema.sql', 'r');
-        $fileSize = filesize(base_path() . '/packages/Schema/tests/schema.sql');
+        $dbFile = fopen(base_path() . '/data/schema.sql', 'r');
+        $fileSize = filesize(base_path() . '/data/schema.sql');
 
         Artisan::call('db:schema', ['--force' => true, '--path' => 'database/factories', '--dbconnect' => 'mysql2']);
 

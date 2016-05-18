@@ -13,12 +13,11 @@
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory>./tests/</directory>
-            <directory>./packages/Schema/tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory>packages/Schema/src/Console/Commands/DumpSql.php</directory>
+            <directory>src/Schema/Console/Commands/DumpSql.php</directory>
         </whitelist>
     </filter>
 

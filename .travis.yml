@@ -11,18 +11,15 @@ before_script:
   - mysql -e 'create database schema_test;'
   - mysql -e 'create database schema_test_2;'
   - cp -R ./vendor/laravel/laravel/* .
-  - cp -R ./packages/Schema/tests/data/composer-laravel.json ./composer.json
-  - cp -R ./packages/Schema/tests/data/phpunit.xml .
-  - cp -R ./packages/Schema/src/Console/Kernel.php ./app/Console/
-  - cp -R ./packages/Schema/tests/data/database.php ./config/database.php
+  - cp -R ./data/composer-laravel.json ./composer.json
+  - cp -R ./data/phpunit.xml .
+  - cp -R ./src/Schema/Console/Kernel.php ./app/Console/
+  - cp -R ./data/database.php ./config/database.php
   - composer update
   - composer install --prefer-source --no-interaction --dev
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml
-  - php tests/build/scripts/junit.php
-  - . tests/build/bin/phpcs
-  - . tests/build/bin/phpmd
 
 notifications:
   on_success: always

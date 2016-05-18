@@ -26,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Autn\\Schema\\":"packages/Schema/src/"
+            "Autn\\Schema\\":"src/Schema/"
         }
     },
     "autoload-dev": {
