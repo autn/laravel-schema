@@ -73,7 +73,7 @@ class DumpSql extends Command
         } catch (Exception $e) {
             $this->info($e->getMessage()); //@codeCoverageIgnore
 
-            return;
+            return; //@codeCoverageIgnore
         }
 
         if ($force || $this->confirm('Your database will refresh! Do you wish to continue? [yes|no]'))
