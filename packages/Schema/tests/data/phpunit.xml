@@ -18,15 +18,7 @@
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">app/</directory>
-            <directory suffix=".php">packages/*/src/</directory>
-            <directory suffix=".php">packages/*/resources/views/</directory>
-            <directory suffix=".*">tests/*</directory>
-            <directory suffix=".json">packages/*</directory>
-            <directory suffix=".xml">packages/*</directory>
-            <directory suffix=".md">packages/*</directory>
-            <directory>packages/Schema/database.php</directory>
-            <directory>packages/Schema/src/Console/Kernel.php</directory>
+            <directory>packages/Schema/src/Console/Commands/DumpSql.php</directory>
         </whitelist>
     </filter>
 
