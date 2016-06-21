@@ -2,12 +2,13 @@
 
 namespace Autn\Schema\Console\Commands;
 
+use Ifsnop\Mysqldump\Mysqldump as IMysqldump;
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
 use PDO;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class DumpSql extends Command
 {
@@ -16,7 +17,7 @@ class DumpSql extends Command
      *
      * @var string
      */
-    protected $signature = 'db:schema {--path= : Path to save file} {--dbconnect= : Name of database} {--force= : Force }';
+    protected $signature = 'db:schema {--path= : Path to save file} {--dbconnect= : Name of database} {--force= : Force (true/false) } {--method= : Name of method (mysqldump/php) }';
 
     /**
      * The console command description.
@@ -45,6 +46,7 @@ class DumpSql extends Command
         $pathparam = $this->option('path');
         $dbconnect = $this->option('dbconnect');
         $force = $this->option('force');
+        $method = $this->option('method');
 
         if (!$dbconnect) {
             $dbconnect = 'mysql';
@@ -83,12 +85,24 @@ class DumpSql extends Command
             Artisan::call('optimize');
             Artisan::call('migrate:refresh', [ '--database' => $dbconnect, '--force' => true ]);
 
-            try {
-                exec("mysqldump --user=$username --password=$password --host=$host $database > " . $path . '/' . $filename);
+            if (!$method || $method == 'mysqldump') {
+                try {
+                    exec("mysqldump --user=$username --password=$password --host=$host $database > " . $path . '/' . $filename);
 
-                $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
-            } catch (Exception $e) {
-                $this->info($e->getMessage()); //@codeCoverageIgnore
+                    $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
+                } catch (Exception $e) {
+                    $this->info($e->getMessage()); //@codeCoverageIgnore
+                }
+            } elseif ($method == 'php') {
+                try {
+                    $dump = new IMysqldump("mysql:host=$host;dbname=$database", $username, $password);
+                    $dump->start($path . '/' . $filename);
+                    $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
+                } catch (\Exception $e) {
+                    $this->info('Mysqldump-php error: ' . $e->getMessage()); //@codeCoverageIgnore
+                }
+            } else {
+                $this->info('The method you selected does not support. You can select below methods: `mysqldump` or `php`');
             }
         }
     }

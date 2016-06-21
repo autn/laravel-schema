@@ -100,5 +100,7 @@ This is full options:
 
 --dbconnect: Database connect to run
 
---force: Run without confirmation
+--force: Run without confirmation (true/false)
+
+--method: Name of method (mysqldump/php). If your server not install mysql (remote to other database server), you must select `php` method
 ```
