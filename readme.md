@@ -32,7 +32,7 @@ protected $commands = [
 ```
 ## 3. Usage
 
-**Notice:** The command will refresh your database, the seeding and real data will removed. I recommend use `--dbconnect` to run with other database.
+**Notice:** The command will refresh your database, the seeding and actual datas will remove. I recommend use `--dbconnect` to run with other database.
 
 In root Laravel project, type:
 
@@ -40,7 +40,7 @@ In root Laravel project, type:
 php artisan db:schema
 ```
 
-The file will generated to the default `databases` path (`database/schema.sql`).
+The file will generate to the default `databases` path (`database/schema.sql`).
 
 You can change this path by add `--path` option to the command.
 
@@ -100,5 +100,7 @@ This is full options:
 
 --dbconnect: Database connect to run
 
---force: Run without confirmation
+--force: Run without confirmation (true/false)
+
+--method: Name of method (mysqldump/php). If your server not install mysql (remote to other database server), you must select `php` method
 ```
