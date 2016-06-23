@@ -128,4 +128,29 @@ class SchemaTest extends SchemaTestCase
         fclose($schemaDbFile);
         unlink(base_path() . '/database/schema.sql');
     }
+
+    public function testWithRefreshOption()
+    {
+        $dbFile = fopen(base_path() . '/data/schema-php.sql', 'r');
+        $fileSize = filesize(base_path() . '/data/schema-php.sql');
+
+        Artisan::call('db:schema', ['--force' => true]);
+        Artisan::call('db:schema', ['--force' => true, '--refresh' => 'no', '--method' => 'php']);
+
+        $this->assertTrue(file_exists(base_path() . '/database/schema.sql'));
+
+        $schemaDbFile = fopen(base_path() . '/database/schema.sql', 'r');
+        $schemaFileSize = filesize(base_path() . '/database/schema.sql');
+
+        while (($line = fgets($dbFile)) !== false) {
+            $schemaLine = fgets($schemaDbFile);
+            if (substr($schemaLine, 0, 2) !== '--' && substr($schemaLine, 0, 2) !== '/*') {
+                $this->assertEquals($line, $schemaLine);
+            }
+        }
+
+        fclose($dbFile);
+        fclose($schemaDbFile);
+        unlink(base_path() . '/database/schema.sql');
+    }
 }

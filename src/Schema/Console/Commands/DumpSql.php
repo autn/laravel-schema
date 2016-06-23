@@ -17,7 +17,7 @@ class DumpSql extends Command
      *
      * @var string
      */
-    protected $signature = 'db:schema {--path= : Path to save file} {--dbconnect= : Name of database} {--force= : Force (true/false) } {--method= : Name of method (mysqldump/php) }';
+    protected $signature = 'db:schema {--path= : Path to save file} {--dbconnect= : Name of database} {--force : Run without confirmation } {--method= : Name of method (mysqldump/php) } {--refresh= : Public migration files and refresh migrations (yes/no) }';
 
     /**
      * The console command description.
@@ -47,6 +47,7 @@ class DumpSql extends Command
         $dbconnect = $this->option('dbconnect');
         $force = $this->option('force');
         $method = $this->option('method');
+        $refresh = $this->option('refresh');
 
         if (!$dbconnect) {
             $dbconnect = 'mysql';
@@ -64,7 +65,7 @@ class DumpSql extends Command
         } else {
             $path = base_path() . '/' . $pathparam;
             if (!is_dir($path)) {
-                $this->info('The path does not exist');
+                $this->error('The path does not exist');
 
                 return;
             }
@@ -73,12 +74,12 @@ class DumpSql extends Command
         try {
             $dbh = new PDO("mysql:host=$host;dbname=$database", $username, $password);
         } catch (Exception $e) {
-            $this->info($e->getMessage()); //@codeCoverageIgnore
+            $this->error($e->getMessage()); //@codeCoverageIgnore
 
             return; //@codeCoverageIgnore
         }
 
-        if ($force || $this->confirm('Your database will refresh! Do you wish to continue? [yes|no]'))
+        if ($force == 'true')
         {
             Artisan::call('vendor:publish');
             Artisan::call('clear-compiled');
@@ -91,7 +92,8 @@ class DumpSql extends Command
 
                     $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
                 } catch (Exception $e) {
-                    $this->info($e->getMessage()); //@codeCoverageIgnore
+                    $this->error($e->getMessage()); //@codeCoverageIgnore
+                    $this->info('You can select `php` method by add `--method=php` to command.');
                 }
             } elseif ($method == 'php') {
                 try {
@@ -99,10 +101,57 @@ class DumpSql extends Command
                     $dump->start($path . '/' . $filename);
                     $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
                 } catch (\Exception $e) {
-                    $this->info('Mysqldump-php error: ' . $e->getMessage()); //@codeCoverageIgnore
+                    $this->error('Mysqldump-php error: ' . $e->getMessage()); //@codeCoverageIgnore
                 }
             } else {
-                $this->info('The method you selected does not support. You can select below methods: `mysqldump` or `php`');
+                $this->error('The method you selected does not support. You can select below methods: `mysqldump` or `php`');
+            }
+        } elseif ($refresh == 'no') {
+            if (!$method || $method == 'mysqldump') {
+                try {
+                    exec("mysqldump --user=$username --password=$password --host=$host $database > " . $path . '/' . $filename);
+
+                    $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
+                } catch (Exception $e) {
+                    $this->error($e->getMessage()); //@codeCoverageIgnore
+                    $this->info('You can select `php` method by add `--method=php` to command.');
+                }
+            } elseif ($method == 'php') {
+                try {
+                    $dump = new IMysqldump("mysql:host=$host;dbname=$database", $username, $password);
+                    $dump->start($path . '/' . $filename);
+                    $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
+                } catch (\Exception $e) {
+                    $this->error('Mysqldump-php error: ' . $e->getMessage()); //@codeCoverageIgnore
+                }
+            } else {
+                $this->error('The method you selected does not support. You can select below methods: `mysqldump` or `php`');
+            }
+        } elseif ($this->confirm('Your database will refresh! Do you wish to continue? [yes|no]')) {
+            Artisan::call('vendor:publish');
+            Artisan::call('clear-compiled');
+            Artisan::call('optimize');
+            Artisan::call('migrate:refresh', [ '--database' => $dbconnect, '--force' => true ]);
+
+            if (!$method || $method == 'mysqldump') {
+                try {
+                    exec("mysqldump --user=$username --password=$password --host=$host $database > " . $path . '/' . $filename);
+
+                    $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
+                } catch (Exception $e) {
+                    $this->error($e->getMessage()); //@codeCoverageIgnore
+                    $this->info('You can select `php` method by add `--method=php` to command.');
+                }
+            } elseif ($method == 'php') {
+                try {
+                    $dump = new IMysqldump("mysql:host=$host;dbname=$database", $username, $password);
+                    $dump->start($path . '/' . $filename);
+                    $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
+                } catch (\Exception $e) {
+                    $this->error('Mysqldump-php error: ' . $e->getMessage()); //@codeCoverageIgnore
+                }
+            } else {
+                $this->error('The method you selected does not support. You can select below methods: `mysqldump` or `php`');
             }
         }
     }

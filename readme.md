@@ -96,11 +96,13 @@ Example:
 
 This is full options:
 ```
---path: Path to save schema file
+--path=: Path to save schema file
 
---dbconnect: Database connect to run
+--dbconnect=: Database connect to run
 
---force: Run without confirmation (true/false)
+--force: Run without confirmation
 
---method: Name of method (mysqldump/php). If your server not install mysql (remote to other database server), you must select `php` method
+--method=: Name of method (mysqldump/php). If your server not install mysql (remote to other database server), you must select `php` method
+
+--refresh=: Public migration files and refresh migrations (yes/no)
 ```
