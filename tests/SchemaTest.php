@@ -194,9 +194,6 @@ class SchemaTest extends SchemaTestCase
     }
 
     public function testFailure() {
-        $dbFile = fopen(base_path() . '/data/schema-php.sql', 'r');
-        $fileSize = filesize(base_path() . '/data/schema-php.sql');
-
         // Run refresh migrations
         Artisan::call('db:schema', ['--force' => true]);
         unlink(base_path() . '/database/schema.sql');
@@ -211,8 +208,5 @@ class SchemaTest extends SchemaTestCase
         $this->assertFalse(file_exists(base_path() . '/database/schema.sql'));
         $this->assertFalse(file_exists(base_path() . '/database/schema.sql.gz'));
         $this->assertFalse(file_exists(base_path() . '/database/schema.sql.bz2'));
-
-        fclose($dbFile);
-        fclose($schemaDbFile);
     }
 }
