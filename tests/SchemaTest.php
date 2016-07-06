@@ -199,6 +199,7 @@ class SchemaTest extends SchemaTestCase
 
         // Run refresh migrations
         Artisan::call('db:schema', ['--force' => true]);
+        unlink(base_path() . '/database/schema.sql');
         Artisan::call('db:schema', ['--refresh' => 'no', '--method' => 'php2']);
 
         $this->assertFalse(file_exists(base_path() . '/database/schema.sql'));
