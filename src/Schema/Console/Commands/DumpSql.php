@@ -50,7 +50,7 @@ class DumpSql extends Command
         $refresh = strtolower($this->option('refresh'));
         $type = strtolower($this->option('type'));
 
-        if (!in_array($type, ['sql', 'gzip', 'bzip2'])) {
+        if ($type && !in_array($type, ['sql', 'gzip', 'bzip2'])) {
             $this->error('The type "' . $type . '" does not support');
 
             return;
