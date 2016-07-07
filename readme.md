@@ -105,4 +105,23 @@ This is full options:
 --method=: Name of method (mysqldump/php). If your server not install mysql (remote to other database server), you must select `php` method
 
 --refresh=: Public migration files and refresh migrations (yes/no)
+
+--type=: Type of file (sql/gzip/bzip2)
+```
+
+## 4. Changelog
+
+- Version 1.x
+```
+Supported mysqldump method
+```
+
+- Version 2.0.x
+```
+Supported php method (mysqldump version php)
+```
+
+- Version 2.1.x
+```
+Supported compress (type option)
 ```

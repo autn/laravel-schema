@@ -153,4 +153,60 @@ class SchemaTest extends SchemaTestCase
         fclose($schemaDbFile);
         unlink(base_path() . '/database/schema.sql');
     }
+
+    public function testWithTypeOption()
+    {
+        Artisan::call('db:schema', ['--force' => true, '--type' => 'Gzip']);
+        $this->assertTrue(file_exists(base_path() . '/database/schema.sql.gz'));
+        unlink(base_path() . '/database/schema.sql.gz');
+
+        Artisan::call('db:schema', ['--force' => true, '--type' => 'bzip2']);
+        $this->assertTrue(file_exists(base_path() . '/database/schema.sql.bz2'));
+        unlink(base_path() . '/database/schema.sql.bz2');
+
+        Artisan::call('db:schema', ['--force' => true, '--type' => 'sql']);
+        $this->assertTrue(file_exists(base_path() . '/database/schema.sql'));
+        unlink(base_path() . '/database/schema.sql');
+
+        Artisan::call('db:schema', ['--force' => true, '--type' => 'gzip', '--method' => 'mysqldump']);
+        $this->assertTrue(file_exists(base_path() . '/database/schema.sql.gz'));
+        unlink(base_path() . '/database/schema.sql.gz');
+
+        Artisan::call('db:schema', ['--force' => true, '--type' => 'BZIP2', '--method' => 'mysqldump']);
+        $this->assertTrue(file_exists(base_path() . '/database/schema.sql.bz2'));
+        unlink(base_path() . '/database/schema.sql.bz2');
+
+        Artisan::call('db:schema', ['--force' => true, '--type' => 'sql', '--method' => 'mysqldump']);
+        $this->assertTrue(file_exists(base_path() . '/database/schema.sql'));
+        unlink(base_path() . '/database/schema.sql');
+
+        Artisan::call('db:schema', ['--force' => true, '--type' => 'gzip', '--method' => 'php']);
+        $this->assertTrue(file_exists(base_path() . '/database/schema.sql.gz'));
+        unlink(base_path() . '/database/schema.sql.gz');
+
+        Artisan::call('db:schema', ['--force' => true, '--type' => 'bzip2', '--method' => 'php']);
+        $this->assertTrue(file_exists(base_path() . '/database/schema.sql.bz2'));
+        unlink(base_path() . '/database/schema.sql.bz2');
+
+        Artisan::call('db:schema', ['--force' => true, '--type' => 'sql', '--method' => 'php']);
+        $this->assertTrue(file_exists(base_path() . '/database/schema.sql'));
+        unlink(base_path() . '/database/schema.sql');
+    }
+
+    public function testFailure() {
+        // Run refresh migrations
+        Artisan::call('db:schema', ['--force' => true]);
+        unlink(base_path() . '/database/schema.sql');
+        Artisan::call('db:schema', ['--refresh' => 'no', '--method' => 'php2']);
+
+        $this->assertFalse(file_exists(base_path() . '/database/schema.sql'));
+        $this->assertFalse(file_exists(base_path() . '/database/schema.sql.gz'));
+        $this->assertFalse(file_exists(base_path() . '/database/schema.sql.bz2'));
+
+        Artisan::call('db:schema', ['--refresh' => 'no', '--type' => 'type']);
+
+        $this->assertFalse(file_exists(base_path() . '/database/schema.sql'));
+        $this->assertFalse(file_exists(base_path() . '/database/schema.sql.gz'));
+        $this->assertFalse(file_exists(base_path() . '/database/schema.sql.bz2'));
+    }
 }
