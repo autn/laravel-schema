@@ -49,6 +49,7 @@ class DumpSql extends Command
         $method = strtolower($this->option('method'));
         $refresh = strtolower($this->option('refresh'));
         $type = strtolower($this->option('type'));
+        $dumpOptions = array_except($this->option(), ['path', 'dbconnect', 'force', 'method', 'refresh', 'type']);
 
         if ($type && !in_array($type, ['sql', 'gzip', 'bzip2'])) {
             $this->error('The type "' . $type . '" does not support');
@@ -130,17 +131,12 @@ class DumpSql extends Command
         } elseif ($method == 'php') {
             try {
                 if ($type == 'gzip') {
-                    $dumpSettings = ['compress' => IMysqldump::GZIP];
-                    $dump = new IMysqldump("mysql:host=$host;dbname=$database", $username, $password, $dumpSettings);
-                    $dump->start($path . '/' . $filename);
+                    $dumpOptions = $dumpOptions + ['compress' => IMysqldump::GZIP];
                 } elseif ($type == 'bzip2') {
-                    $dumpSettings = ['compress' => IMysqldump::BZIP2];
-                    $dump = new IMysqldump("mysql:host=$host;dbname=$database", $username, $password, $dumpSettings);
-                    $dump->start($path . '/' . $filename);
-                } else {
-                    $dump = new IMysqldump("mysql:host=$host;dbname=$database", $username, $password);
-                    $dump->start($path . '/' . $filename);
+                    $dumpOptions = $dumpOptions + ['compress' => IMysqldump::BZIP2];
                 }
+                $dump = new IMysqldump("mysql:host=$host;dbname=$database", $username, $password, $dumpOptions);
+                $dump->start($path . '/' . $filename);
 
                 $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
             } catch (\Exception $e) {
