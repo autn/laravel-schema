@@ -17,7 +17,7 @@ class DumpSql extends Command
      *
      * @var string
      */
-    protected $signature = 'db:schema {--path= : Path to save file} {--dbconnect= : Name of database} {--force : Run without confirmation } {--method= : Name of method (mysqldump/php) } {--refresh= : Public migration files and refresh migrations (yes/no) } {--type= : Type of file (sql/gzip/bzip2) }';
+    protected $signature = 'db:schema {--path= : Path to save file} {--dbconnect= : Name of database} {--force : Run without confirmation } {--method= : Name of method (mysqldump/php) } {--refresh= : Public migration files and refresh migrations (yes/no) } {--type= : Type of file (sql/gzip/bzip2) } {--opts=*}';
 
     /**
      * The console command description.
@@ -49,7 +49,8 @@ class DumpSql extends Command
         $method = strtolower($this->option('method'));
         $refresh = strtolower($this->option('refresh'));
         $type = strtolower($this->option('type'));
-
+        $dumpOptions = $this->option('opts');
+        $dumpOptions = $dumpOptions ? $dumpOptions : [];
         if ($type && !in_array($type, ['sql', 'gzip', 'bzip2'])) {
             $this->error('The type "' . $type . '" does not support');
 
@@ -102,7 +103,7 @@ class DumpSql extends Command
         }
 
         if ($refresh != 'no') {
-            if ($force == 'true' || $this->confirm('Your database will refresh! Do you wish to continue? [yes|no]')) {
+            if ($force == 'true' || $this->confirm('Your database will refresh! Do you wish to continue?')) {
                 Artisan::call('vendor:publish');
                 Artisan::call('clear-compiled');
                 Artisan::call('optimize');
@@ -130,17 +131,17 @@ class DumpSql extends Command
         } elseif ($method == 'php') {
             try {
                 if ($type == 'gzip') {
-                    $dumpSettings = ['compress' => IMysqldump::GZIP];
-                    $dump = new IMysqldump("mysql:host=$host;dbname=$database", $username, $password, $dumpSettings);
-                    $dump->start($path . '/' . $filename);
+                    $dumpOptions[] ='compress='.IMysqldump::GZIP;
                 } elseif ($type == 'bzip2') {
-                    $dumpSettings = ['compress' => IMysqldump::BZIP2];
-                    $dump = new IMysqldump("mysql:host=$host;dbname=$database", $username, $password, $dumpSettings);
-                    $dump->start($path . '/' . $filename);
-                } else {
-                    $dump = new IMysqldump("mysql:host=$host;dbname=$database", $username, $password);
-                    $dump->start($path . '/' . $filename);
+                    $dumpOptions[] = 'compress='.IMysqldump::BZIP2;
                 }
+                $options = [];
+                foreach ($dumpOptions as $key => $opt) {
+                    list($k,$v) = explode('=', $opt);
+                    $options[$k] = $v === 'false' ? false :  $v;
+                }
+                $dump = new IMysqldump("mysql:host=$host;dbname=$database", $username, $password, $options);
+                $dump->start($path . '/' . $filename);
 
                 $this->info('Generate successed, the file saved to: ' . $path . '/' . $filename);
             } catch (\Exception $e) {
