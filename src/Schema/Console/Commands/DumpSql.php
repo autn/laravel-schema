@@ -131,9 +131,9 @@ class DumpSql extends Command
         } elseif ($method == 'php') {
             try {
                 if ($type == 'gzip') {
-                    $dumpOptions = $dumpOptions + ['compress' => IMysqldump::GZIP];
+                    $dumpOptions[] ='compress='.IMysqldump::GZIP;
                 } elseif ($type == 'bzip2') {
-                    $dumpOptions = $dumpOptions + ['compress' => IMysqldump::BZIP2];
+                    $dumpOptions[] = 'compress='.IMysqldump::BZIP2;
                 }
                 $options = [];
                 foreach ($dumpOptions as $key => $opt) {
