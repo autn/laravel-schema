@@ -94,7 +94,7 @@ Example:
 // ...
 ```
 
-This is full options:
+There are full options:
 ```
 --path=: Path to save schema file
 
