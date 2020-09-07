@@ -7,7 +7,8 @@ services:
   - mysql
 
 before_script:
-  - composer update
+  - export NODE_OPTIONS=--max_old_space_size=4096
+  - composer install -o
   - mysql -e 'create database schema_test;'
   - mysql -e 'create database schema_test_2;'
   - cp -R ./vendor/laravel/laravel/* .
@@ -15,7 +16,7 @@ before_script:
   - cp -R ./data/phpunit.xml .
   - cp -R ./src/Schema/Console/Kernel.php ./app/Console/
   - cp -R ./data/database.php ./config/database.php
-  - composer update
+  - composer update -o
   - composer install --prefer-source --no-interaction --dev
 
 script:
