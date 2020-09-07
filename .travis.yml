@@ -7,8 +7,7 @@ services:
   - mysql
 
 before_script:
-  - export NODE_OPTIONS=--max_old_space_size=8192
-  - composer install -o
+  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer install --prefer-dist --no-interaction
   - mysql -e 'create database schema_test;'
   - mysql -e 'create database schema_test_2;'
   - cp -R ./vendor/laravel/laravel/* .
@@ -16,8 +15,7 @@ before_script:
   - cp -R ./data/phpunit.xml .
   - cp -R ./src/Schema/Console/Kernel.php ./app/Console/
   - cp -R ./data/database.php ./config/database.php
-  - composer update -o
-  - composer install --prefer-source --no-interaction --dev
+  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer update --prefer-dist --no-interaction --dev
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml
