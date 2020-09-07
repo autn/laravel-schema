@@ -7,7 +7,7 @@ services:
   - mysql
 
 before_script:
-  - export NODE_OPTIONS=--max_old_space_size=4096
+  - export NODE_OPTIONS=--max_old_space_size=8192
   - composer install -o
   - mysql -e 'create database schema_test;'
   - mysql -e 'create database schema_test_2;'
