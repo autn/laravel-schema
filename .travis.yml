@@ -10,6 +10,7 @@ before_script:
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer update --prefer-dist
   - mysql -e 'create database schema_test;'
   - mysql -e 'create database schema_test_2;'
+  - rm -r ./vendor/laravel/laravel/tests
   - cp -R ./vendor/laravel/laravel/* .
   - cp -R ./data/composer-laravel.json ./composer.json
   - cp -R ./data/phpunit.xml .

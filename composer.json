@@ -33,7 +33,6 @@
     "autoload-dev": {
         "classmap": [
             "tests/SchemaTestCase.php"
-
         ]
     },
     "config": {
