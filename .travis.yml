@@ -15,9 +15,9 @@ before_script:
   - cp -R ./data/phpunit.xml .
   - cp -R ./src/Schema/Console/Kernel.php ./app/Console/
   - cp -R ./data/database.php ./config/database.php
+  - php artisan config:clear
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer update --prefer-dist --no-interaction --dev
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer dump-autoload
-  - php artisan config:clear
 
 script:
   - php artisan config:clear
