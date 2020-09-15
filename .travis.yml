@@ -17,7 +17,6 @@ before_script:
   - cp -R ./data/database.php ./config/database.php
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer update --prefer-dist --no-interaction --dev
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer dump-autoload
-  - rm -r ./tests/TestCase.php
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml
