@@ -16,14 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `schema_test`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `schema_test` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `schema_test`;
-
---
 -- Table structure for table `failed_jobs`
 --
 
