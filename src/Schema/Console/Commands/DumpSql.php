@@ -105,7 +105,7 @@ class DumpSql extends Command
         if ($refresh != 'no') {
             if ($force == 'true' || $this->confirm('Your database will refresh! Do you wish to continue?')) {
                 Artisan::call('config:clear');
-                Artisan::call('vendor:publish');
+                // Artisan::call('vendor:publish');
                 Artisan::call('clear-compiled');
                 Artisan::call('optimize');
                 Artisan::call('migrate:refresh', [ '--database' => $dbconnect, '--force' => true ]);
