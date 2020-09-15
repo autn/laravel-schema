@@ -3,8 +3,8 @@ language: php
 php:
 - 7.3
 
-addons:
-  mariadb: '10.0'
+services:
+  - mysql
 
 before_script:
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer update --prefer-dist
