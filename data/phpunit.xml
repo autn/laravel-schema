@@ -3,6 +3,13 @@
          xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="true"
+         reportUselessTests="true"
+         syntaxCheck="false">
 >
     <testsuites>
         <testsuite name="Unit">
@@ -14,11 +21,6 @@
             <directory>src/Schema/Console/Commands/DumpSql.php</directory>
         </whitelist>
     </filter>
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">./app</directory>
-        </include>
-    </coverage>
     <php>
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
