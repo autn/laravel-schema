@@ -8,12 +8,10 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="true"
-         reportUselessTests="true"
-         syntaxCheck="false">
 >
     <testsuites>
         <testsuite name="Unit">
-            <directory>./tests/</directory>
+            <directory suffix="SchemaTest.php">./tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
