@@ -17,9 +17,10 @@ before_script:
   - cp -R ./data/database.php ./config/database.php
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer update --prefer-dist --no-interaction --dev
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer dump-autoload
-  - php artisan config:cache
+  - php artisan config:clear
 
 script:
+  - php artisan config:clear
   - vendor/bin/phpunit --configuration phpunit.xml
 
 notifications:
