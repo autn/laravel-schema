@@ -127,3 +127,8 @@ Supported php method (mysqldump version php)
 ```
 Supported compress (type option)
 ```
+
+- Version 3.x
+```
+Update to support latest Laravel version
+```
