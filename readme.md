@@ -8,6 +8,8 @@
 
 This package generate Mysql database schema from migrations files.
 
+Update Sep 2020: Now support latest Laravel version
+
 ## 2. Installation
 
 Install via composer - edit your `composer.json` to require the package.
