@@ -15,14 +15,11 @@ before_script:
   - cp -R ./data/phpunit.xml .
   - cp -R ./src/Schema/Console/Kernel.php ./app/Console/
   - cp -R ./data/database.php ./config/database.php
-  - php artisan config:clear
   - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer update --prefer-dist --no-interaction --dev
-  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer dump-autoload
 
 script:
-  - php artisan config:clear
   - vendor/bin/phpunit --configuration phpunit.xml
 
 notifications:
-  on_success: always
-  on_failure: always
+  on_success: never
+  on_failure: change
